@@ -1,12 +1,9 @@
 import React from 'react'
-import 'codemirror/theme/dracula.css'
 import { GetServerSideProps } from 'next'
 import ReactMarkdown from 'react-markdown'
 
 // editor imports
-import CodeMirror from "@uiw/react-codemirror";
-import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
-import { languages } from "@codemirror/language-data";
+import Editor from "@monaco-editor/react";
 
 
 
@@ -14,9 +11,14 @@ const Article: React.FC = props => {
   
 
   return (
-    <CodeMirror
-    options={{theme:'dracula'}}
-    />
+    <Editor
+     height="90vh"
+     defaultLanguage="markdown"
+     defaultValue="# vai la lek"
+     
+     theme="vs-dark"
+     
+   />
   )
 }
 
