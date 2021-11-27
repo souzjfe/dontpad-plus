@@ -1,4 +1,6 @@
 import styled from 'styled-components'
+import Editor from "@monaco-editor/react";
+import ReactMarkdown from 'react-markdown';
 export const Header = styled.input`
   background: #282c34;
   color:white;
@@ -8,15 +10,14 @@ export const Header = styled.input`
   padding: 0.8rem;
   text-transform: uppercase;
 `
-export const Result = styled.div`
+export const MarkdownPreview = styled(ReactMarkdown)`
   padding: 0.8rem;
   `
-export const TextDrop = styled.div`
-  background: #282c34;
-  height: 100vh;
-
-`
+export const TextEditor = styled(Editor)`
+  height: 100%;
+  `
 export const Page = styled.div`
+  height: 100vh;
   display: grid;
   grid-template-columns: 50% 50%;
   grid-template-rows: auto auto;
@@ -24,11 +25,11 @@ export const Page = styled.div`
     grid-column-start: 1;
     grid-column-end: 3;
   }
-  ${Result}{
+  ${MarkdownPreview}{
     grid-column: 2;
     grid-row: 2;
   }
-  ${TextDrop}{
+  ${TextEditor}{
     grid-column: 1;
     grid-row: 2;
   }
