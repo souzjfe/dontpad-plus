@@ -1,14 +1,19 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from '../../../lib/prisma'
+import { NextApiResponseServerIO } from '../../../types/next'
 
 
-export default async function handle(req: NextApiRequest, res: NextApiResponse) {
-  const postId = req.query.id
-
+export default async function handle(req: NextApiRequest, res: NextApiResponseServerIO) {
+  let articleTitle = req.query.title
+  if (typeof articleTitle !== "string" ){
+    articleTitle = articleTitle[0]
+  }
   if (req.method === 'GET') {
-    handleGET(postId, res)
+    handleGET(articleTitle, res)
   } else if (req.method === 'DELETE') {
-    handleDELETE(postId, res)
+    handleDELETE(articleTitle, res)
+  } else if (req.method === 'PUT') {
+    handlePUT(articleTitle, res, req.body)
   } else {
     throw new Error(
       `The HTTP ${req.method} method is not supported at this route.`
@@ -16,19 +21,30 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
   }
 }
 
-// GET /api/post/:id
-async function handleGET(postId, res) {
-  const post = await prisma.post.findUnique({
-    where: { id: Number(postId) },
-    include: { author: true },
+// PUT /api/artcile/:title
+async function handlePUT(articleTitle: string, res: NextApiResponseServerIO,data: JSON) {
+  const article = await prisma.article.update({
+    where: { title: articleTitle },
+    data,
   })
-  res.json(post)
+  // dispatch to channel "article"
+  res?.socket?.server?.io?.emit(articleTitle, article);
+  // return article
+  res.status(201).json(article);
+  
+}
+// GET /api/article/:title
+async function handleGET(articleTitle: string, res:NextApiResponse) {
+  const article = await prisma.article.findUnique({
+    where: { title: articleTitle },
+  })
+  res.status(201).json(article);
 }
 
-// DELETE /api/post/:id
-async function handleDELETE(postId, res) {
-  const post = await prisma.post.delete({
-    where: { id: Number(postId) },
+// DELETE /api/artcile/:title
+async function handleDELETE(articleTitle: string, res:NextApiResponse) {
+  const article = await prisma.article.delete({
+    where: { title: String(articleTitle) },
   })
-  res.json(post)
+  res.status(201).json(article);
 }
