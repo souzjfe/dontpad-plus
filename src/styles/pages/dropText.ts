@@ -18,7 +18,7 @@ export const Header = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 2.4rem;
+  height: 36px;
   >section{
     position: relative;
     display: flex;
@@ -34,8 +34,6 @@ export const Header = styled.header`
     }
   }
 `
-
-
 export const MarkdownPreview = styled(ReactMarkdown)`
   padding: 0.8rem;
   `
