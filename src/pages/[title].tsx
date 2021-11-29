@@ -1,6 +1,6 @@
 import React, { useEffect, useState,useMemo,useCallback } from 'react'
 import Router from 'next/router'
-import { Header, Page, MarkdownPreview, TextEditor } from '../styles/pages/dropText';
+import {Header, Page, MarkdownPreview, TextEditor, Online, Offline } from '../styles/pages/dropText';
 import { GetServerSideProps } from 'next';
 import { io } from "socket.io-client";
 
@@ -9,6 +9,7 @@ import { io } from "socket.io-client";
 import ReactMarkdown from 'react-markdown';
 import SyntaxHighlighter from 'react-syntax-highlighter'
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
+import prisma from '../lib/prisma';
 
 const DropText: React.FC<IArticle> = props => {
   const [connected, setConnected] = useState<boolean>(false);
@@ -48,8 +49,15 @@ const DropText: React.FC<IArticle> = props => {
   }, []);
   return (
     <Page>
-      <Header defaultValue={`${props.title} its ${connected? 'online':"offline"}`} />
-        
+      
+      <Header>
+      <section>
+      {props.title}
+      </section>
+      <section>
+        collaboration status: {connected? <Online title="Available"/>: <Offline title ="Unavailable"/>}
+      </section>
+    </Header>
         <TextEditor
           defaultLanguage="markdown"
           value={content}
@@ -98,27 +106,15 @@ export const getServerSideProps: GetServerSideProps = async context => {
     title = title[0]
   }
   
-  try {
-    
-    const res = await fetch(`http://localhost:3000/api/article/${title}`)
-    const article = await res.json()
-    const createdAt = new Date(article.createdAt)
-    const updatedAt = new Date(article.updatedAt)
+  
+    const article = await prisma.article.findUnique({
+      where: { title: title },
+    })
     return {
       props: {...article},
     }
-  } catch (error) {
-      const article = {title, content:''}
-    await fetch(`http://localhost:3000/api/article`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(article),
-      })
-    
-    return {
-      props: article,
-    }
-  }
+  
+  
     
   
 }

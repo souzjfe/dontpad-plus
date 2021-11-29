@@ -1,7 +1,13 @@
 import styled from 'styled-components'
 import Editor from "@monaco-editor/react";
 import ReactMarkdown from 'react-markdown';
-export const Header = styled.input`
+export const Online = styled.span`
+  background: #45fc03;
+`
+export const Offline = styled.span`
+  background: #fc0303;
+`
+export const Header = styled.header`
   background: #282c34;
   color:white;
   font-weight: 700;
@@ -9,7 +15,27 @@ export const Header = styled.input`
   font-size: 1.2rem;
   padding: 0.8rem;
   text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 2.4rem;
+  >section{
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-right: 1.8rem;
+    ${Online},${Offline}{
+      height: 1.6rem;
+      width: 1.6rem;
+      border-radius: 50%;
+      content: '';
+      position: absolute;
+      right:0;
+    }
+  }
 `
+
+
 export const MarkdownPreview = styled(ReactMarkdown)`
   padding: 0.8rem;
   `
@@ -24,6 +50,7 @@ export const Page = styled.div`
   ${Header}{
     grid-column-start: 1;
     grid-column-end: 3;
+    grid-row: 1 ;
   }
   ${MarkdownPreview}{
     grid-column: 2;
