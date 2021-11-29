@@ -1,9 +1,11 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest } from 'next'
 import ArticleController from '../../../controllers/ArticleController'
-import prisma from '../../../lib/prisma'
 import { NextApiResponseServerIO } from '../../../types/next'
 
-export default function Handle(req, res) {
+export default function Handle(
+  req: NextApiRequest,
+  res: NextApiResponseServerIO
+): void {
   switch (req.method) {
     case 'GET':
       ArticleController.findByTitle(req, res)
