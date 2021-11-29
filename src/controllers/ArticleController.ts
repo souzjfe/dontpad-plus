@@ -2,7 +2,7 @@ import { NextApiRequest } from 'next'
 import ArticleRepository from '../repositories/ArticleRepository'
 import { NextApiResponseServerIO } from '../types/next'
 
-class articleController {
+class ArticleController {
   async findAll(req: NextApiRequest, res: NextApiResponseServerIO) {
     const articles = await ArticleRepository.findAll()
 
@@ -58,6 +58,7 @@ class articleController {
     res?.socket?.server?.io?.emit(title, article);
     return res.json(article)
   }
+
 }
 
-export default new articleController()
+export default new ArticleController()

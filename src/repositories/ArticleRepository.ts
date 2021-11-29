@@ -1,3 +1,4 @@
+import IArticle from '../interfaces/IArticle';
 import prisma from '../lib/prisma'
 
 class UserRepository {
@@ -11,7 +12,7 @@ class UserRepository {
       },
     })
   }
-  create(article) {
+  create(article: IArticle) {
     return prisma.article.create({
       data: article,
     })

@@ -8,7 +8,6 @@ export default function Handle(req, res) {
     case 'GET':
       ArticleController.findAll(req, res)
     break
-
     case 'POST':
       ArticleController.create(req, res)
     break
