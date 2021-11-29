@@ -8,7 +8,7 @@ export const Offline = styled.span`
   background: #fc0303;
 `
 export const Header = styled.header`
-  background: #282c34;
+   background: #282c34;
   color:white;
   font-weight: 700;
   border: none;
