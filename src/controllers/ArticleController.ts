@@ -55,7 +55,7 @@ class articleController {
       return res.json({ error: 'article not found' })
 
     const article = await ArticleRepository.update(title, req.body)
-
+    res?.socket?.server?.io?.emit(title, article);
     return res.json(article)
   }
 }
