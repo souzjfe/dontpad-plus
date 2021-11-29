@@ -1,35 +1,39 @@
-import IArticle from '../interfaces/IArticle';
+import IArticle from '../interfaces/IArticle'
 import prisma from '../lib/prisma'
 
 class UserRepository {
   findAll() {
     return prisma.article.findMany()
   }
+
   findByTitle(title: string) {
     return prisma.article.findUnique({
       where: {
-        title,
-      },
+        title
+      }
     })
   }
+
   create(article: IArticle) {
     return prisma.article.create({
-      data: article,
+      data: article
     })
   }
+
   delete(title: string) {
     return prisma.article.delete({
       where: {
-        title,
-      },
+        title
+      }
     })
   }
+
   update(title: string, user) {
     return prisma.article.update({
       where: {
-        title,
+        title
       },
-      data: user,
+      data: user
     })
   }
 }

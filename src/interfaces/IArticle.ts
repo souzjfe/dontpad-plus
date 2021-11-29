@@ -1,4 +1,4 @@
-export default interface IArticle{
+export default interface IArticle {
   title: string
   content: string
   createdAt: Date

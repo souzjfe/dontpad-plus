@@ -1,7 +1,6 @@
 // service/socket.js
-import { io } from "socket.io-client";
+import { io } from 'socket.io-client'
 
-
-export const socket = io(process.env.BASE_URL, {
-  path: "/api/socketio",
-});
+export const socket = io(process.env.NEXT_PUBLIC_API_URL, {
+  path: '/api/socketio'
+})

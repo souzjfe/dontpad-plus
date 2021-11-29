@@ -11,8 +11,8 @@ class ArticleController {
 
   async findByTitle(req: NextApiRequest, res: NextApiResponseServerIO) {
     let title = req.query.title
-    
-    if (typeof title !== "string" ){
+
+    if (typeof title !== 'string') {
       title = title[0]
     }
     const article = await ArticleRepository.findByTitle(title)
@@ -31,7 +31,7 @@ class ArticleController {
   async delete(req: NextApiRequest, res: NextApiResponseServerIO) {
     let title = req.query.title
 
-    if (typeof title !== "string" ){
+    if (typeof title !== 'string') {
       title = title[0]
     }
 
@@ -45,20 +45,12 @@ class ArticleController {
   }
 
   async update(req: NextApiRequest, res: NextApiResponseServerIO) {
-    let title = req.query.title
-    
-    if (typeof title !== "string" ){
-      title = title[0]
-    }
-
-    if (!(await ArticleRepository.findByTitle(title)))
-      return res.json({ error: 'article not found' })
+    const title = req.query.title as string
 
     const article = await ArticleRepository.update(title, req.body)
-    res?.socket?.server?.io?.emit(title, article);
+    res?.socket?.server?.io?.emit(title, article)
     return res.json(article)
   }
-
 }
 
 export default new ArticleController()

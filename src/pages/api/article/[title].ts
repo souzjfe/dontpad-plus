@@ -7,20 +7,20 @@ export default function Handle(req, res) {
   switch (req.method) {
     case 'GET':
       ArticleController.findByTitle(req, res)
-    break
-  
+      break
+
     case 'PUT':
       ArticleController.update(req, res)
-    break
+      break
 
     case 'DELETE':
       ArticleController.delete(req, res)
-    break
+      break
   }
 }
 
 export const config = {
   api: {
-    externalResolver: true,
-  },
+    externalResolver: true
+  }
 }
