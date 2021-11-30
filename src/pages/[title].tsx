@@ -22,6 +22,7 @@ import { socket } from '../lib/socket'
 const DropText: React.FC<IArticle> = props => {
   const [connected, setConnected] = useState<boolean>(false)
   const [content, setContent] = useState(props.content)
+  const [oldContent, setOldContent] = useState(props.content)
   const onChange = useCallback(async (value: string, ev: any) => {
     // setContent(value)
     // socket.emit(props.title, { ...props, content: value })
@@ -93,7 +94,7 @@ const DropText: React.FC<IArticle> = props => {
           }
         }}
       >
-        {String(content)?.replace('\r', 'a')}
+        {String(content)?.replace('\n', '\n\n')}
       </MarkdownPreview>
     </Page>
   )

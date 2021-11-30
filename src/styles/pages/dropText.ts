@@ -36,6 +36,15 @@ export const Header = styled.header`
 `
 export const MarkdownPreview = styled(ReactMarkdown)`
   padding: 0.8rem;
+  line-height: 2rem;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    border-bottom: rgba(0, 0, 0, 0.1) 1px solid;
+    padding-bottom: 0.8rem;
+  }
 `
 export const TextEditor = styled(Editor)`
   height: 100%;

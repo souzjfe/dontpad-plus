@@ -48,7 +48,8 @@ class ArticleController {
     const title = req.query.title as string
 
     res?.socket?.server?.io?.emit(title, req.body)
-    return res.json(req.body)
+    const article = await ArticleRepository.update(title, req.body)
+    return res.json(article)
   }
 }
 
