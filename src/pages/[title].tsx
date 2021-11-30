@@ -23,11 +23,10 @@ const DropText: React.FC<IArticle> = props => {
   const [connected, setConnected] = useState<boolean>(false)
   const [content, setContent] = useState(props.content)
   const [oldContent, setOldContent] = useState(props.content)
-  const onChange = useCallback(async (value: string, ev: any) => {
-    // setContent(value)
-    // socket.emit(props.title, { ...props, content: value })
-
-    try {
+  const onChange = useCallback(
+    async (value: string, ev: any) => {
+      // setContent(value)
+      // socket.emit(props.title, { ...props, content: value })
       const body = { title: props.title, content: value }
 
       await fetch(
@@ -38,13 +37,16 @@ const DropText: React.FC<IArticle> = props => {
           body: JSON.stringify(body)
         }
       )
-    } catch (error) {
-      console.error(error)
-    }
-  }, [])
+    },
+    [props.title]
+  )
   // connect to socket server
 
   useEffect(() => {
+    const socket = io(process.env.NEXT_PUBLIC_API_URL, {
+      path: '/api/socketio'
+    })
+
     // log socket connection
     socket.on('connect', () => {
       console.log('SOCKET CONNECTED!', socket.id)
