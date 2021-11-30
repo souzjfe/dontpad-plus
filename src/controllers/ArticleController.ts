@@ -17,7 +17,7 @@ class ArticleController {
     }
     const article = await ArticleRepository.findByTitle(title)
 
-    if (!article) return res.json({ error: 'article not found' })
+    if (!article) throw new Error('not found')
 
     return res.json(article)
   }
@@ -36,7 +36,7 @@ class ArticleController {
     }
 
     if (!(await ArticleRepository.findByTitle(title))) {
-      return res.json({ error: 'article not found' })
+      throw new Error('not found')
     }
 
     await ArticleRepository.delete(title)
@@ -47,9 +47,8 @@ class ArticleController {
   async update(req: NextApiRequest, res: NextApiResponseServerIO) {
     const title = req.query.title as string
 
-    const article = await ArticleRepository.update(title, req.body)
-    res?.socket?.server?.io?.emit(title, article)
-    return res.json(article)
+    res?.socket?.server?.io?.emit(title, req.body)
+    return res.json(req.body)
   }
 }
 

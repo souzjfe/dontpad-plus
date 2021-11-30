@@ -1,6 +1,6 @@
 export default interface IArticle {
   title: string
   content: string
-  createdAt: Date
-  updatedAt: Date
+  // createdAt: Date
+  // updatedAt: Date
 }

@@ -10,8 +10,6 @@ generator client {
 
 model Article {
   id        String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
-  createdAt DateTime @default(now()) @map(name: "created_at")
-  updatedAt DateTime @updatedAt @map(name: "updated_at")
   title     String @unique
   content   String?
 }

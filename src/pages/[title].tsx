@@ -93,7 +93,7 @@ const DropText: React.FC<IArticle> = props => {
           }
         }}
       >
-        {String(content)?.replace(/\n$/, '\n\n')}
+        {String(content)?.replace('\r', 'a')}
       </MarkdownPreview>
     </Page>
   )
@@ -104,19 +104,17 @@ export const getServerSideProps: GetServerSideProps = async context => {
     title = title[0]
   }
   try {
-    const res = await fetch(`http://localhost:3000/api/article/${title}`)
-    const article = await res.json()
-    const createdAt = new Date(article.createdAt)
-    const updatedAt = new Date(article.updatedAt)
+    const article = await prisma.article.findUnique({
+      where: {
+        title
+      }
+    })
     return {
-      props: { ...article }
+      props: article
     }
   } catch (error) {
-    const article = { title, content: '' }
-    await fetch('http://localhost:3000/api/article', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(article)
+    const article = await prisma.article.create({
+      data: { title, content: '' }
     })
     return {
       props: article
