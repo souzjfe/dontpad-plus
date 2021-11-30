@@ -30,11 +30,14 @@ const DropText: React.FC<IArticle> = props => {
     try {
       const body = { title: props.title, content: value }
 
-      await fetch(`http://localhost:3000/api/article/${props.title}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body)
-      })
+      await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/article/${props.title}`,
+        {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        }
+      )
     } catch (error) {
       console.error(error)
     }
